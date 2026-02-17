@@ -1,5 +1,11 @@
-# Replace these commands with your repo's canonical checks.
-# Keep order strict: fast static checks first, then behavioral, then docs drift.
-npm run lint
-npm run test
-npm run docs:check
+# codex-os-managed
+# Canonical repo verification commands. Run with:
+#   bash .codex/scripts/run_verify_commands.sh
+
+pnpm --filter web lint
+pnpm --filter web test
+pnpm --filter web typecheck
+pnpm --filter web build
+cargo fmt --all -- --check
+cargo clippy --workspace --all-targets --all-features -- -D warnings
+cargo test --workspace
