@@ -457,6 +457,29 @@ export function InternalSupportConsole() {
               }))}
             />
           </div>
+
+          <div className="grid gap-4 xl:grid-cols-2">
+            <RecentEventsCard
+              title="Recent billing events"
+              emptyLabel="No recent billing events."
+              items={support.recent_billing_events.map((event) => ({
+                id: event.stripe_event_id,
+                title: event.event_type,
+                detail: `Stripe event ${event.stripe_event_id}`,
+                timestamp: event.processed_at,
+              }))}
+            />
+            <RecentEventsCard
+              title="Recent audit activity"
+              emptyLabel="No recent audit activity."
+              items={support.recent_audit_logs.map((entry) => ({
+                id: entry.id,
+                title: entry.action,
+                detail: `${entry.actor_type} -> ${entry.target_type}${entry.target_id ? ` (${entry.target_id})` : ""}`,
+                timestamp: entry.created_at,
+              }))}
+            />
+          </div>
         </>
       ) : null}
     </div>
@@ -498,6 +521,15 @@ function SnapshotRow({ label, value }: { label: string; value: string }) {
   );
 }
 
+function formatTimestamp(timestamp: string) {
+  return new Date(timestamp).toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
+}
+
 function ActivityCard({
   title,
   items,
@@ -534,6 +566,48 @@ function ActivityCard({
               >
                 {item.actionLabel}
               </Button>
+            </div>
+          ))
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+function RecentEventsCard({
+  title,
+  emptyLabel,
+  items,
+}: {
+  title: string;
+  emptyLabel: string;
+  items: Array<{
+    id: string;
+    title: string;
+    detail: string;
+    timestamp: string;
+  }>;
+}) {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        {items.length === 0 ? (
+          <p className="text-sm text-muted-foreground">{emptyLabel}</p>
+        ) : (
+          items.map((item) => (
+            <div key={item.id} className="rounded-lg border p-4">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="font-medium">{item.title}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{item.detail}</p>
+                </div>
+                <span className="shrink-0 text-xs text-muted-foreground">
+                  {formatTimestamp(item.timestamp)}
+                </span>
+              </div>
             </div>
           ))
         )}

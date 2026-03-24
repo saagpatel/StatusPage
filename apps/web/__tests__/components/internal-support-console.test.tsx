@@ -76,7 +76,13 @@ function supportPayload() {
           delivery_status: "pending",
         },
       ],
-      recent_billing_events: [],
+      recent_billing_events: [
+        {
+          stripe_event_id: "evt_123",
+          event_type: "invoice.payment_failed",
+          processed_at: "2026-03-13T12:15:00Z",
+        },
+      ],
       failed_email_deliveries: [
         {
           id: "email-1",
@@ -110,7 +116,19 @@ function supportPayload() {
           created_at: "2026-03-13T12:00:00Z",
         },
       ],
-      recent_audit_logs: [],
+      recent_audit_logs: [
+        {
+          id: "audit-1",
+          org_id: "org-1",
+          actor_user_id: "user-1",
+          actor_type: "operator",
+          action: "billing.sync_requested",
+          target_type: "organization",
+          target_id: "org-1",
+          details: { source: "internal-support-console" },
+          created_at: "2026-03-13T12:20:00Z",
+        },
+      ],
     },
   };
 }
@@ -262,6 +280,10 @@ describe("InternalSupportConsole", () => {
     expect(screen.getByText("Entitlement violations")).toBeInTheDocument();
     expect(screen.getByText(/Reduce active monitors before the grace period ends/i)).toBeInTheDocument();
     expect(screen.getByText("Invitation state")).toBeInTheDocument();
+    expect(screen.getByText("Recent billing events")).toBeInTheDocument();
+    expect(screen.getByText("invoice.payment_failed")).toBeInTheDocument();
+    expect(screen.getByText("Recent audit activity")).toBeInTheDocument();
+    expect(screen.getByText("billing.sync_requested")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Sync billing" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Retry email" })).toBeInTheDocument();
   });
