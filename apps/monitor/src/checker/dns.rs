@@ -1,6 +1,6 @@
 use std::time::{Duration, Instant};
 
-use hickory_resolver::TokioAsyncResolver;
+use hickory_resolver::TokioResolver;
 use shared::enums::CheckStatus;
 use shared::models::monitor::DnsConfig;
 
@@ -21,7 +21,7 @@ impl Checker for DnsChecker {
     async fn check(&self, timeout: Duration) -> CheckResult {
         let start = Instant::now();
 
-        let resolver = match TokioAsyncResolver::tokio_from_system_conf() {
+        let resolver = match TokioResolver::builder_tokio().and_then(|builder| builder.build()) {
             Ok(r) => r,
             Err(e) => {
                 return CheckResult {
