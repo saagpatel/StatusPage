@@ -50,7 +50,9 @@ export default function IncidentDetailPage() {
   }, [id, slug]);
 
   useEffect(() => {
-    fetchIncident();
+    queueMicrotask(() => {
+      void fetchIncident();
+    });
   }, [fetchIncident]);
 
   async function handlePostUpdate(e: React.FormEvent) {
