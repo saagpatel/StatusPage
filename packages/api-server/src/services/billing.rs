@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 use chrono::{DateTime, Utc};
-use hmac::{Hmac, Mac};
+use hmac::{Hmac, KeyInit, Mac};
 use reqwest::StatusCode;
 use serde::Deserialize;
 use serde_json::Value;
