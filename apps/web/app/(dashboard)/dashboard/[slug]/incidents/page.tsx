@@ -43,7 +43,9 @@ export default function IncidentsPage() {
   }, [slug]);
 
   useEffect(() => {
-    void fetchIncidents();
+    queueMicrotask(() => {
+      void fetchIncidents();
+    });
   }, [fetchIncidents]);
 
   useRealtimeIncidents(

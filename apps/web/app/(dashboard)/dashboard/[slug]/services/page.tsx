@@ -41,7 +41,9 @@ export default function ServicesPage() {
   }, [slug]);
 
   useEffect(() => {
-    fetchServices();
+    queueMicrotask(() => {
+      void fetchServices();
+    });
   }, [fetchServices]);
 
   useRealtimeStatus(slug, () => {

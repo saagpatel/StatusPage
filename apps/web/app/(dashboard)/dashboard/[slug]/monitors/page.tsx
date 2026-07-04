@@ -31,7 +31,9 @@ export default function MonitorsPage() {
   }, [slug]);
 
   useEffect(() => {
-    fetchMonitors();
+    queueMicrotask(() => {
+      void fetchMonitors();
+    });
   }, [fetchMonitors]);
 
   async function handleDelete(monitorId: string) {
