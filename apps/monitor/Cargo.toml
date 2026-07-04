@@ -6,8 +6,8 @@ edition = "2021"
 [dependencies]
 shared = { path = "../../packages/shared" }
 tokio = { version = "1", features = ["full"] }
-sqlx = { version = "0.8", features = ["runtime-tokio", "postgres", "uuid", "chrono", "migrate", "json"] }
-reqwest = { version = "0.12", features = ["json"] }
+sqlx = { version = "0.9", features = ["runtime-tokio", "postgres", "uuid", "chrono", "migrate", "json"] }
+reqwest = { version = "0.13", features = ["json"] }
 hickory-resolver = "0.26.1"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["json", "env-filter"] }
@@ -20,8 +20,8 @@ chrono = { version = "0.4", features = ["serde"] }
 uuid = { version = "1", features = ["v4", "serde"] }
 async-trait = "0.1"
 tokio-util = "0.7"
-rand = "0.8"
-redis = { version = "0.27", features = ["tokio-comp", "connection-manager"] }
+rand = "0.10"
+redis = { version = "1.2", features = ["tokio-comp", "connection-manager"] }
 
 [features]
 default = ["ping"]
