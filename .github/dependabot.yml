@@ -47,3 +47,7 @@ updates:
       - dependencies
     commit-message:
       prefix: "build(deps)"
+    ignore:
+      - dependency-name: "eslint"
+        versions:
+          - "10.x"
