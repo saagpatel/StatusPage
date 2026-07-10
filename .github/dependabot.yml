@@ -51,3 +51,6 @@ updates:
       - dependency-name: "eslint"
         versions:
           - "10.x"
+      - dependency-name: "typescript"
+        versions:
+          - "7.x"
